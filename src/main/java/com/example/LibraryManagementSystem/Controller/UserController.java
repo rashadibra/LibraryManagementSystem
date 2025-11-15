@@ -6,12 +6,10 @@ import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/users")
@@ -34,5 +32,26 @@ public class UserController {
         }
     }
 
-//
+    @GetMapping("/{id}")
+    public ResponseEntity<UserEntity> findUserById(@PathVariable("id") int id){
+     Optional<UserEntity> findedUser=userService.findUserById_Service(id);
+if(findedUser.isEmpty()){
+    return ResponseEntity.notFound().build();
+}else{
+    return ResponseEntity.ok().body(findedUser.get());
+}
+    }
+// Delete User
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteUserById(@PathVariable("id") int id){
+         boolean deletedUser=userService.deleteUserById_Service(id);
+         if(deletedUser){
+            return ResponseEntity.ok(true);
+         }
+         else{
+             return ResponseEntity.status(404).body(false);
+         }
+    }
+
+
 }
