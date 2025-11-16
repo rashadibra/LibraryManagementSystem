@@ -19,18 +19,19 @@ public class UserService {
         return userRepository.save(user);
     }
 
-//    Find user by id
-    public Optional<UserEntity> findUserById_Service(int id){
+    //    Find user by id
+    public Optional<UserEntity> findUserById_Service(int id) {
         return userRepository.findById(id);
     }
 
-//    Delete user by id
-    public boolean deleteUserById_Service(int id){
-        try {
-            userRepository.deleteById(id);
-            return true;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    //    Delete user by id
+    public boolean deleteUserById_Service(int id) {
+
+        if (!userRepository.existsById(id)) {
+            return false;
         }
+
+        userRepository.deleteById(id);
+        return true;
     }
-}
+    }
