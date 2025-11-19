@@ -112,18 +112,3 @@ Bu layihənin əsas ideyası: **admin bütün əməliyyatları idarə edir**, ox
     * Recommendation engine istifadəçiyə oxşar kitablar təklif edir
 
 ---
-
-
-[Admin creates user] --> [User requests book] --> [Admin checks available BookCopy]
-|
-v
-[Admin records borrowDate] --> [BookCopy marked unavailable]
-|
-v
-[User reads book]
-|
-v
-[Book returned to admin] --> [Admin records returnDate] --> [Admin asks rating] --> [BorrowRecord updated]
-|
-v
-[System recalculates book average rating & average reading time] --> [Book visible in search/filter with updated stats]
