@@ -1,10 +1,7 @@
 package com.example.LibraryManagementSystem.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "users")
@@ -12,14 +9,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Getter
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "user_name", nullable = false,length = 100)
-    private String user_name;
+    @Column(name = "userName", nullable = false, length = 100)
+    private String userName;
 
-    @Column(name = "user_surname", nullable = false,length = 100)
-    private String user_surname;
+    @Column(name = "userSurname", nullable = false, length = 100)
+    private String userSurname;
+
 }

@@ -1,12 +1,21 @@
 package com.example.LibraryManagementSystem.Controller;
 
+import com.example.LibraryManagementSystem.Dto.UserCreateResponse;
+import com.example.LibraryManagementSystem.Dto.UserCreateRequest;
 import com.example.LibraryManagementSystem.Entity.UserEntity;
 import com.example.LibraryManagementSystem.Service.UserService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
+import org.aspectj.lang.annotation.DeclareError;
+import org.hibernate.annotations.NotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -19,25 +28,61 @@ public class UserController {
 
     //    Create User
     @PostMapping
-    public ResponseEntity createUser(@RequestBody UserEntity userEntity) {
-        UserEntity createdUser = userService.createUserService(userEntity);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+    public ResponseEntity<UserCreateResponse> createUser(@Valid @RequestBody UserCreateRequest request) {
+        UserCreateResponse createdUser = userService.createUserService(request);
+        return ResponseEntity
+                .status(HttpStatus.CREATED).body(createdUser);
+    }
+
+//    Find All User
+    @GetMapping("/AllUsers")
+    public List<UserCreateResponse> FindAllUser(){
+        return userService.findAllUser_Service().stream().map(user->{
+            return new UserCreateResponse(user.getId(), user.getUserName(), user.getUserSurname());
+        }).collect(Collectors.toList());
     }
 
     //    Find User By Id
     @GetMapping("/{id}")
-    public ResponseEntity<UserEntity> findUserById(@PathVariable int id) {
+    public ResponseEntity<UserCreateResponse> findUserById(@PathVariable int id) {
         return userService.findUserById_Service(id)
                 .map(user -> ResponseEntity.ok(user))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
+
+    // Find Users By Name and Surname
+    @GetMapping("/by-ns")
+    public ResponseEntity<List<UserCreateResponse>> findUsersByNameAndSurname(
+            @RequestParam String userName,
+            @RequestParam String userSurname
+    ) {
+        List<UserCreateResponse> users = userService.findUserByNameAndSurname_Service(userName, userSurname);
+        if (users.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(users);
+    }
+
+//    Find User By Id and Name and Surname
+@GetMapping("/by-ins")
+public ResponseEntity<UserCreateResponse> findUsersByIdandNameAndSurname(
+        @RequestParam int id,
+        @RequestParam String userName,
+        @RequestParam String userSurname
+) {
+    Optional<UserCreateResponse> user = userService.findUserByIdandNameAndSurname_Service(id,userName, userSurname);
+    if (user.isEmpty()) {
+        return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(user.get());
+}
 
     // Delete User
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUserById(@PathVariable("id") int id) {
         boolean deleted = userService.deleteUserById_Service(id);
         if (deleted) {
-            return ResponseEntity.noContent().build(); // 204
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
