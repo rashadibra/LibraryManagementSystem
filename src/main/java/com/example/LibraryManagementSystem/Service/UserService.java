@@ -1,10 +1,9 @@
 package com.example.LibraryManagementSystem.Service;
 
-import com.example.LibraryManagementSystem.Dto.UserCreateRequest;
-import com.example.LibraryManagementSystem.Dto.UserCreateResponse;
+import com.example.LibraryManagementSystem.Dto.User.UserCreateRequest;
+import com.example.LibraryManagementSystem.Dto.User.UserCreateResponse;
 import com.example.LibraryManagementSystem.Entity.UserEntity;
 import com.example.LibraryManagementSystem.Repository.UserRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

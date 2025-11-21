@@ -1,14 +1,9 @@
 package com.example.LibraryManagementSystem.Controller;
 
-import com.example.LibraryManagementSystem.Dto.UserCreateResponse;
-import com.example.LibraryManagementSystem.Dto.UserCreateRequest;
-import com.example.LibraryManagementSystem.Entity.UserEntity;
+import com.example.LibraryManagementSystem.Dto.User.UserCreateResponse;
+import com.example.LibraryManagementSystem.Dto.User.UserCreateRequest;
 import com.example.LibraryManagementSystem.Service.UserService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Size;
-import org.aspectj.lang.annotation.DeclareError;
-import org.hibernate.annotations.NotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
     private UserService userService;
 

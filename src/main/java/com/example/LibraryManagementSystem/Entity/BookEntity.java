@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@Table(name = "books")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -19,12 +20,12 @@ public class BookEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "book_name", nullable = false, length = 100)
-    private String book_name;
+    @Column(name = "bookName", nullable = false, length = 100)
+    private String bookName;
 
-    @Column(name = "book_author", nullable = false, length = 150)
-    private String book_author;
+    @Column(name = "bookAuthor", nullable = false, length = 150)
+    private String bookAuthor;
 
     @Column(updatable = false)
-    private LocalDateTime created_id;
+    private LocalDateTime createdAt;
 }

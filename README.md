@@ -86,7 +86,7 @@ Bu layihənin əsas ideyası: **admin bütün əməliyyatları idarə edir**, ox
 ## **Texnologiyalar**
 
 * **Backend:** Java / Spring Boot
-* **Database:** MySQL / H2
+* **Database:** MySQL 
 * **OOP & Collections:** `Book`, `BookCopy`, `User`, `BorrowRecord`
 * **Service Layer:** `LibraryService`, `OverdueService`, `RecommendationService`
 * **REST API Endpoints:**
