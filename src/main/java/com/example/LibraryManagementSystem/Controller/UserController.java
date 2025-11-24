@@ -30,7 +30,7 @@ public class UserController {
     }
 
 //    Find All User
-    @GetMapping("/AllUsers")
+    @GetMapping("/allUsers")
     public List<UserCreateResponse> FindAllUser(){
         return userService.findAllUser_Service().stream().map(user->{
             return new UserCreateResponse(user.getId(), user.getUserName(), user.getUserSurname());

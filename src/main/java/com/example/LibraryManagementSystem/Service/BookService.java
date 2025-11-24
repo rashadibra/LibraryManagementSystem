@@ -5,7 +5,10 @@ import com.example.LibraryManagementSystem.Dto.Book.BookCreateResponse;
 import com.example.LibraryManagementSystem.Dto.User.UserCreateResponse;
 import com.example.LibraryManagementSystem.Entity.BookEntity;
 import com.example.LibraryManagementSystem.Repository.BookRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,13 +23,16 @@ public class BookService {
     }
 
     //    Create Book
-    public BookCreateResponse createBook_Service(BookCreateRequest book) {
-        BookEntity savedBook = bookRepository.save(
-                BookEntity.builder()
-                        .bookName(book.getBookName())
-                        .bookAuthor(book.getBookAuthor())
-                        .build());
-        return new BookCreateResponse(savedBook.getId(), savedBook.getBookName(), savedBook.getBookAuthor(), savedBook.getCreatedAt());
+    public Optional<BookCreateResponse> createBook_Service(BookCreateRequest book) {
+        if(!bookRepository.existsByBookNameAndBookAuthor(book.getBookName(),book.getBookAuthor())){
+            BookEntity savedBook = bookRepository.save(
+                    BookEntity.builder()
+                            .bookName(book.getBookName())
+                            .bookAuthor(book.getBookAuthor())
+                            .build());
+            return Optional.of(new BookCreateResponse(savedBook.getId(), savedBook.getBookName(), savedBook.getBookAuthor(), savedBook.getCreatedAt()));
+        }
+return Optional.empty();
     }
 
     ;
@@ -45,6 +51,13 @@ public class BookService {
         });
     }
 
+//    Find book by Name and Author
+@GetMapping("/by-na")
+    public Optional<BookCreateResponse> findBookByNameAndAuthor_Service(String bookName, String bookAuthor){
+        return bookRepository.findByBookNameAndBookAuthor(bookName,bookAuthor).map(book->{
+           return new BookCreateResponse(book.getId(),book.getBookName(),book.getBookAuthor(),book.getCreatedAt());
+        });
+}
 
     //    Delete book by id
     public boolean deleteBookById_Service(int id) {

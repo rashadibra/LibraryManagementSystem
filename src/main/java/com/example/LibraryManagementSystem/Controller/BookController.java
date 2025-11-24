@@ -2,14 +2,13 @@ package com.example.LibraryManagementSystem.Controller;
 
 import com.example.LibraryManagementSystem.Dto.Book.BookCreateRequest;
 import com.example.LibraryManagementSystem.Dto.Book.BookCreateResponse;
-import com.example.LibraryManagementSystem.Dto.User.UserCreateResponse;
 import com.example.LibraryManagementSystem.Service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -24,8 +23,12 @@ public class BookController {
 //    Create book
     @PostMapping
     public ResponseEntity createBook(@RequestBody BookCreateRequest book){
-        BookCreateResponse createdBook=bookService.createBook_Service(book);
-        return ResponseEntity.ok().body(createdBook);
+        Optional<BookCreateResponse> createdBook=bookService.createBook_Service(book);
+        if(createdBook.isPresent()){
+            return ResponseEntity.ok().body(createdBook);
+        }else{
+            return ResponseEntity.status(409).body(null);
+        }
     }
 
 //    Find All Book
@@ -42,6 +45,18 @@ public class BookController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
+    // Find Book By Name
+    @GetMapping("/by-na")
+    public ResponseEntity<BookCreateResponse> findUsersByNameAndSurname(
+            @RequestParam String bookName,
+            @RequestParam String bookAuthor
+    ) {
+        Optional<BookCreateResponse> book = bookService.findBookByNameAndAuthor_Service(bookName, bookAuthor);
+        if (book.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(book.get());
+    }
 
     // Delete User
     @DeleteMapping("/{id}")
