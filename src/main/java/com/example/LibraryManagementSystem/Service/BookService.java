@@ -29,8 +29,9 @@ public class BookService {
                     BookEntity.builder()
                             .bookName(book.getBookName())
                             .bookAuthor(book.getBookAuthor())
+                            .stock(1)
                             .build());
-            return Optional.of(new BookCreateResponse(savedBook.getId(), savedBook.getBookName(), savedBook.getBookAuthor(), savedBook.getCreatedAt()));
+            return Optional.of(new BookCreateResponse(savedBook.getId(), savedBook.getBookName(), savedBook.getBookAuthor(), savedBook.getCreatedAt(),savedBook.getStock()));
         }
 return Optional.empty();
     }
@@ -40,14 +41,14 @@ return Optional.empty();
     //    Find ALl Books
     public List<BookCreateResponse> findAllBook_Service() {
         return bookRepository.findAll().stream().map(book -> {
-            return new BookCreateResponse(book.getId(), book.getBookName(), book.getBookAuthor(), book.getCreatedAt());
+            return new BookCreateResponse(book.getId(), book.getBookName(), book.getBookAuthor(), book.getCreatedAt(), book.getStock());
         }).collect(Collectors.toList());
     }
 
     //    Find book by id
     public Optional<BookCreateResponse> findBookById_Service(int id) {
         return bookRepository.findById(id).map(book -> {
-            return new BookCreateResponse(book.getId(), book.getBookName(), book.getBookAuthor(), book.getCreatedAt());
+            return new BookCreateResponse(book.getId(), book.getBookName(), book.getBookAuthor(), book.getCreatedAt(), book.getStock());
         });
     }
 
@@ -55,7 +56,7 @@ return Optional.empty();
 @GetMapping("/by-na")
     public Optional<BookCreateResponse> findBookByNameAndAuthor_Service(String bookName, String bookAuthor){
         return bookRepository.findByBookNameAndBookAuthor(bookName,bookAuthor).map(book->{
-           return new BookCreateResponse(book.getId(),book.getBookName(),book.getBookAuthor(),book.getCreatedAt());
+           return new BookCreateResponse(book.getId(),book.getBookName(),book.getBookAuthor(),book.getCreatedAt(),book.getStock());
         });
 }
 
@@ -67,5 +68,12 @@ return Optional.empty();
         bookRepository.deleteById(id);
         return true;
     }
+
+    //***    Increment stock by id  ***//
+    public boolean updateStock_Service(int id, int stock){
+        int updated=bookRepository.updateStockById(id,stock);
+       return updated>0;
+    }
+
 
 }

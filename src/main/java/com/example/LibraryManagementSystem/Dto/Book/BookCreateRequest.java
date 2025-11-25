@@ -13,8 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 public class BookCreateRequest {
-
     private String bookName;
     private String bookAuthor;
-
+    private int stock;
 }

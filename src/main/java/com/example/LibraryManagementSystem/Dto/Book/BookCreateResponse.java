@@ -17,4 +17,5 @@ public class BookCreateResponse{
     private String bookName;
     private String bookAuthor;
     private LocalDateTime createdAt;
+    private int stock;
 }

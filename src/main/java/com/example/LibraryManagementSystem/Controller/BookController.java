@@ -16,24 +16,24 @@ import java.util.stream.Collectors;
 public class BookController {
     private BookService bookService;
 
-    public BookController(BookService bookService){
-        this.bookService=bookService;
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
     }
 
-//    Create book
+    //    Create book
     @PostMapping
-    public ResponseEntity createBook(@RequestBody BookCreateRequest book){
-        Optional<BookCreateResponse> createdBook=bookService.createBook_Service(book);
-        if(createdBook.isPresent()){
+    public ResponseEntity createBook(@RequestBody BookCreateRequest book) {
+        Optional<BookCreateResponse> createdBook = bookService.createBook_Service(book);
+        if (createdBook.isPresent()) {
             return ResponseEntity.ok().body(createdBook);
-        }else{
+        } else {
             return ResponseEntity.status(409).body(null);
         }
     }
 
-//    Find All Book
+    //    Find All Book
     @GetMapping("allBooks")
-    public List<BookCreateResponse> FindAllBook(){
+    public List<BookCreateResponse> FindAllBook() {
         return bookService.findAllBook_Service();
     }
 
@@ -66,6 +66,21 @@ public class BookController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    //***    Increment in stock   ***//
+    @PutMapping("/{id}/updateStock")
+    public ResponseEntity<String> incrementStockById(
+            @PathVariable int id,
+            @RequestParam int stockQuantity
+    ) {
+     boolean updatedStock=  bookService.updateStock_Service(id,stockQuantity);
+        if(updatedStock){
+            return ResponseEntity.ok("Stok sayı yeniləndi.");
+        }
+        else{
+            return ResponseEntity.status(400).body("Stok sayı yenilənmədi.");
+        }
     }
 
 }

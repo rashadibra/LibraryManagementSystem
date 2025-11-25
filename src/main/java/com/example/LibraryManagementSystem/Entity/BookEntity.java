@@ -28,4 +28,7 @@ public class BookEntity {
 
     @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(name="stock")
+    private int stock;
 }
