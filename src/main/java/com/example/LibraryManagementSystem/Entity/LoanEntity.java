@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.apache.catalina.User;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -25,11 +26,11 @@ public class LoanEntity {
     @JoinColumn(name = "book_id",  nullable = false)
     private BookEntity bookId;
     @Column(name = "borrowed_date", insertable = false)
-    private Date borrowedDate;
+    private LocalDate borrowedDate;
     @Column(name = "due_date", nullable = false)
-    private Date dueDate;
+    private LocalDate dueDate;
     @Column(name = "returned_date")
-    private Date returnedDate;
+    private LocalDate returnedDate;
     @Enumerated(EnumType.STRING )
     private loanStatus status;
 }

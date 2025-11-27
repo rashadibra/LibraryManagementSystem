@@ -3,6 +3,7 @@ package com.example.LibraryManagementSystem.Dto.Loan;
 import com.example.LibraryManagementSystem.Enum.loanStatus;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,5 +13,5 @@ import java.util.Date;
 public class LoanCreateRequest {
     private int userId;
     private int bookId;
-    private Date dueDate;
+    private LocalDate dueDate;
 }

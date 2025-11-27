@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -16,8 +17,8 @@ public class LoanCreateResponse {
     private int loanId;
     private int userId;
     private int bookId;
-    private Date borrowedDate;
-    private Date dueDate;
-    private Date returnedDate;
+    private LocalDate borrowedDate;
+    private LocalDate dueDate;
+    private LocalDate returnedDate;
     private loanStatus status;
 }
