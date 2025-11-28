@@ -21,8 +21,8 @@ Bu layihənin əsas ideyası: **admin bütün əməliyyatları idarə edir**, ox
 
 ### **2. Kitab İdarəsi**
 
-* **CRUD əməliyyatları (Admin):** Kitab əlavə etmək, silmək, metadata yeniləmək (title, author, genre, year).
-* **Nüsxə idarəsi:** Hər kitabdan bir neçə nüsxə ola bilər → hər nüsxə ayrıca `BookCopy` kimi izlənir.
+* **CRUD əməliyyatları (Admin):** Kitab əlavə etmək, silmək, və.s
+* **Nüsxə idarəsi:** Hər kitabdan bir neçə nüsxə ola bilər → hər nüsxə ayrıca `Stock` kimi izlənir.
 * **Availability:** Mövcud nüsxələr borrow üçün əlçatan, digər nüsxələr isə artıq borrow edilmiş kimi göstərilir.
 
 ---
@@ -31,8 +31,8 @@ Bu layihənin əsas ideyası: **admin bütün əməliyyatları idarə edir**, ox
 
 * İstifadəçilər və admin aşağıdakı kriteriyalara görə kitabları axtara və filtrləyə bilər:
 
-    * Başlıq (`title`)
-    * Müəllif (`author`)
+    * Name and Author (`title`)
+    * İd (`author`)
     * Mövzu / Janr (`genre`)
     * Nəşr ili (`year`)
     * Populyarlıq / Average Rating (`rating`)
