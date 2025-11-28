@@ -32,7 +32,7 @@ public class LoanService {
     }
 
 
-    //Creating loaned book
+    //Creating loan
     public String CreateLoan_Service(LoanCreateRequest loanBook) {
 
 
@@ -64,7 +64,19 @@ public class LoanService {
             return "Qeydə alındı.";
     }
 
-//    Update Loaned book status
+//    Delete Loan
+public boolean deleteLoanById_Service(int id){
+    if (loanRepository.existsById(id)) {
+        loanRepository.deleteById(id);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+
+    //    Update Loan status
 public boolean updateLoanStatus_Service(int loanId) {
     int updated = loanRepository.updateLoanStatus(
             loanId,

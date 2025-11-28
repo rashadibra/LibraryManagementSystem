@@ -16,12 +16,23 @@ public class LoanController {
         this.loanService = loanService;
     }
 
-    //    Create Loaned book
+    //    Create Loan
     @PostMapping
     public ResponseEntity<String> CreateLoan(@RequestBody LoanCreateRequest loanBook) {
         String savedLoan = loanService.CreateLoan_Service(loanBook);
         return ResponseEntity.ok(savedLoan);
     }
+
+//    Delete Loan
+@DeleteMapping("/{id}")
+public ResponseEntity<String> deleteLoan(@PathVariable int id){
+    boolean deleted = loanService.deleteLoanById_Service(id);
+    if (deleted) {
+        return ResponseEntity.ok("Loan silindi.");
+    } else {
+        return ResponseEntity.status(404).body("Loan tapılmadı.");
+    }
+}
 
 
     //Update Loan book status (Returned)
