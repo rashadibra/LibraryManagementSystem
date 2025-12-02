@@ -2,13 +2,9 @@ package com.example.LibraryManagementSystem.Service;
 
 import com.example.LibraryManagementSystem.Dto.Book.BookCreateRequest;
 import com.example.LibraryManagementSystem.Dto.Book.BookCreateResponse;
-import com.example.LibraryManagementSystem.Dto.User.UserCreateResponse;
 import com.example.LibraryManagementSystem.Entity.BookEntity;
 import com.example.LibraryManagementSystem.Repository.BookRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,9 +25,10 @@ public class BookService {
                     BookEntity.builder()
                             .bookName(book.getBookName())
                             .bookAuthor(book.getBookAuthor())
+                            .bookCatgory(book.getBookCategory())
                             .stock(1)
                             .build());
-            return Optional.of(new BookCreateResponse(savedBook.getId(), savedBook.getBookName(), savedBook.getBookAuthor(), savedBook.getCreatedAt(),savedBook.getStock()));
+            return Optional.of(new BookCreateResponse(savedBook.getId(), savedBook.getBookName(), savedBook.getBookAuthor(), savedBook.getBookCatgory(), savedBook.getCreatedAt(),savedBook.getStock()));
         }
 return Optional.empty();
     }
@@ -41,22 +38,21 @@ return Optional.empty();
     //    Find ALl Books
     public List<BookCreateResponse> findAllBook_Service() {
         return bookRepository.findAll().stream().map(book -> {
-            return new BookCreateResponse(book.getId(), book.getBookName(), book.getBookAuthor(), book.getCreatedAt(), book.getStock());
+            return new BookCreateResponse(book.getId(), book.getBookName(), book.getBookAuthor(), book.getBookCatgory() ,book.getCreatedAt(), book.getStock());
         }).collect(Collectors.toList());
     }
 
     //    Find book by id
     public Optional<BookCreateResponse> findBookById_Service(int id) {
         return bookRepository.findById(id).map(book -> {
-            return new BookCreateResponse(book.getId(), book.getBookName(), book.getBookAuthor(), book.getCreatedAt(), book.getStock());
+            return new BookCreateResponse(book.getId(), book.getBookName(), book.getBookAuthor(), book.getBookCatgory(), book.getCreatedAt(), book.getStock());
         });
     }
 
 //    Find book by Name and Author
-@GetMapping("/by-na")
     public Optional<BookCreateResponse> findBookByNameAndAuthor_Service(String bookName, String bookAuthor){
         return bookRepository.findByBookNameAndBookAuthor(bookName,bookAuthor).map(book->{
-           return new BookCreateResponse(book.getId(),book.getBookName(),book.getBookAuthor(),book.getCreatedAt(),book.getStock());
+           return new BookCreateResponse(book.getId(),book.getBookName(),book.getBookAuthor(),book.getBookCatgory() , book.getCreatedAt(),book.getStock());
         });
 }
 

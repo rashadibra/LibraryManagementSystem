@@ -91,10 +91,11 @@ Bu layihənin əsas ideyası: **admin bütün əməliyyatları idarə edir**, ox
 * **Service Layer:** `LibraryService`, `OverdueService`, `RecommendationService`
 * **REST API Endpoints:**
 
-    * `/admin/books` → add, delete, update, filter
-    * `/admin/users` → create user, view borrow history
-    * `/admin/borrow` → borrow/return operations
-    * `/admin/ratings` → add rating
+    * `/admin/books` → add, delete, update, filter, search
+    * `/admin/users` → add, delete,update, filter, search
+    * `/admin/loan` → borrow/return operations, filter, delete, search
+
+[//]: # (    * `/admin/ratings` → add rating)
     * `/books/search` → filter books by criteria
 * **Exception Handling & Validation:** Input validation, unavailable books, missing user/book errors
 
@@ -103,12 +104,11 @@ Bu layihənin əsas ideyası: **admin bütün əməliyyatları idarə edir**, ox
 ## **Workflow (CEO & Developer View)**
 
 1. Admin istifadəçi hesabı yaradır.
-2. Oxucu kitab istəyir → admin mövcud `BookCopy` verir, borrow date qeyd olunur.
+2. Oxucu kitab istəyir → admin mövcud `BookCopy` verir, borrow date və due date qeyd olunur.
 3. Kitab qaytarılır → admin return date qeyd edir və oxucudan rating soruşur.
 4. Sistem:
 
     * Kitabın `averageRating` və `averageReadingDays` yenilənir
     * Mövcud nüsxələr və reytinqlər search/filter nəticələrində göstərilir
-    * Recommendation engine istifadəçiyə oxşar kitablar təklif edir
 
 ---

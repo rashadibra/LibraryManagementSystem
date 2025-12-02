@@ -2,7 +2,9 @@ package com.example.LibraryManagementSystem.Controller;
 
 import com.example.LibraryManagementSystem.Dto.Book.BookCreateRequest;
 import com.example.LibraryManagementSystem.Dto.Book.BookCreateResponse;
+import com.example.LibraryManagementSystem.Enum.BookCategory;
 import com.example.LibraryManagementSystem.Service.BookService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("admin/books")
 public class BookController {
     private BookService bookService;
 
@@ -22,10 +24,10 @@ public class BookController {
 
     //    Create book
     @PostMapping
-    public ResponseEntity createBook(@RequestBody BookCreateRequest book) {
+    public ResponseEntity createBook(@Valid @RequestBody BookCreateRequest book) {
         Optional<BookCreateResponse> createdBook = bookService.createBook_Service(book);
         if (createdBook.isPresent()) {
-            return ResponseEntity.ok().body(createdBook);
+            return ResponseEntity.ok().body(createdBook.get());
         } else {
             return ResponseEntity.status(409).body(null);
         }
@@ -47,7 +49,7 @@ public class BookController {
 
     // Find Book By Name
     @GetMapping("/by-na")
-    public ResponseEntity<BookCreateResponse> findUsersByNameAndSurname(
+    public ResponseEntity<BookCreateResponse> findBookByNameAndAuthor(
             @RequestParam String bookName,
             @RequestParam String bookAuthor
     ) {
@@ -68,7 +70,7 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    //***    Increment in stock   ***//
+    //***    update stock quantity  ***//
     @PutMapping("/{id}/updateStock")
     public ResponseEntity<String> incrementStockById(
             @PathVariable int id,
@@ -82,5 +84,12 @@ public class BookController {
             return ResponseEntity.status(400).body("Stok sayı yenilənmədi.");
         }
     }
+
+//    *****   Get Category List  *****  //
+    @GetMapping("/categories")
+    public BookCategory[] BookCatgeroies(){
+        return BookCategory.values();
+    }
+
 
 }

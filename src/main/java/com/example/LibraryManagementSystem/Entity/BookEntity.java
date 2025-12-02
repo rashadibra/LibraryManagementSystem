@@ -26,6 +26,9 @@ public class BookEntity {
     @Column(name = "bookAuthor", nullable = false, length = 150)
     private String bookAuthor;
 
+    @Column(name = "bookCategory", nullable = false, length = 250)
+    private String bookCatgory;
+
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
